@@ -11,9 +11,14 @@
 
 
         function Container() {
+            // state: 데이터 저장
             const [counter, setCounter] = React.useState(0);
             const countUp = () => {
-                setCounter(counter + 1)
+
+                //setCounter(counter + 1) -> 이 방식은 프로그램 다른 곳에서 counter를 변경할 때 혼동이 될 수 있음
+
+                // 리렌더링할 때, 함수를 이용하여 현재 state를 혼동없이 얻을 수 있음
+                setCounter((current) => current+1)
             }
             return (
                 <div>

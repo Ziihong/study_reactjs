@@ -1,33 +1,57 @@
 <html>
-    <body>
-        <div id="root"></div>
-    </body>
-    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel">
+<body>
+<div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
 
-        const root = document.querySelector("#root")
-
-
-        function Container() {
-            // state: 데이터 저장
-            const [counter, setCounter] = React.useState(0);
-            const countUp = () => {
-
-                //setCounter(counter + 1) -> 이 방식은 프로그램 다른 곳에서 counter를 변경할 때 혼동이 될 수 있음
-
-                // 리렌더링할 때, 함수를 이용하여 현재 state를 혼동없이 얻을 수 있음
-                setCounter((current) => current+1)
-            }
-            return (
-                <div>
-                    <h3>Total Clicks: {counter}</h3>
-                    <button onClick={countUp}>Click me</button>
-                </div>
-            );
+    function Container() {
+        const [amount, setAmount] = React.useState();
+        const [inverted, setInverted] = React.useState();
+        const onChange = (event) => {
+            setAmount(event.target.value);
+        };
+        const handleReset = () => {
+            setAmount("");
+        };
+        const handleFlip = () => {
+            handleReset();
+            setInverted((current) => !current);
         }
+        return (
+            <div>
+                <h1>Super Converter</h1>
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input
+                        value={inverted ? amount*60 : amount}
+                        id="minutes"
+                        type="number"
+                        placeholder="minutes"
+                        onChange={onChange}
+                        disabled={inverted}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input
+                        value={inverted ? amount : Math.round(amount/60)}
+                        id="hours"
+                        type="number"
+                        placeholder="hours"
+                        onChange={onChange}
+                        disabled={!inverted}
+                    />
+                </div>
+                <button onClick={handleReset}>Reset</button>
+                <button onClick={handleFlip}>{inverted ? "Turn back" : "Invert"}</button>
+            </div>
+        );
+    }
 
-        ReactDOM.render(<Container/>, root)
-    </script>
+    const root = document.querySelector("#root")
+    ReactDOM.render(<Container/>, root)
+</script>
 </html>

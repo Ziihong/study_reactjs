@@ -7,7 +7,7 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 
-    function Container() {
+    function MinutesToHours() {
         const [amount, setAmount] = React.useState();
         const [inverted, setInverted] = React.useState();
         const onChange = (event) => {
@@ -22,7 +22,6 @@
         }
         return (
             <div>
-                <h1>Super Converter</h1>
                 <div>
                     <label htmlFor="minutes">Minutes</label>
                     <input
@@ -51,7 +50,71 @@
         );
     }
 
+    function KmToMiles() {
+        const [amount, setAmount] = React.useState();
+        const [inverted, setInverted] = React.useState();
+        const onChange = (event) => {
+            setAmount(event.target.value);
+        };
+        const handleReset = () => {
+            setAmount("");
+        };
+        const handleFlip = () => {
+            handleReset();
+            setInverted((current) => !current);
+        }
+        return (
+            <div>
+                <div>
+                    <label htmlFor="km">km</label>
+                    <input
+                        value={inverted ? amount*1.609344 : amount}
+                        id="km"
+                        type="number"
+                        placeholder="km"
+                        onChange={onChange}
+                        disabled={inverted}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="miles">miles</label>
+                    <input
+                        value={inverted ? amount : amount*0.621371}
+                        id="miles"
+                        type="number"
+                        placeholder="miles"
+                        onChange={onChange}
+                        disabled={!inverted}
+                    />
+                </div>
+                <button onClick={handleReset}>Reset</button>
+                <button onClick={handleFlip}>{inverted ? "Turn back" : "Invert"}</button>
+            </div>
+        );
+    }
+
+    function App(){
+        const [index, setIndex] = React.useState("-1");
+        const onSelect = (event) => {
+            setIndex(event.target.value); // = setIndex(event.target.options.selectedIndex);
+        }
+        // {} 이용하여 컴포넌트 안에 jsx를 사용할 수 있음. 삼항연산자로 if-else 사용
+        return (
+            <div>
+                <h1>Super Converter</h1>
+                <select value={index} onChange={onSelect}>
+                    <option value="-1">Select your units</option>
+                    <option value="0">Minutes 2 Hours</option>
+                    <option value="1">Km 2 Miles</option>
+                </select>
+                <hr/>
+                {index === "0" ? <MinutesToHours /> : null}
+                {index === "1" ? <KmToMiles /> : null}
+            </div>
+        )
+    }
+
     const root = document.querySelector("#root")
-    ReactDOM.render(<Container/>, root)
+    ReactDOM.render(<App/>, root)
 </script>
 </html>

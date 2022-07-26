@@ -7,109 +7,33 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 
-    function MinutesToHours() {
-        const [amount, setAmount] = React.useState();
-        const [inverted, setInverted] = React.useState();
-        const onChange = (event) => {
-            setAmount(event.target.value);
-        };
-        const handleReset = () => {
-            setAmount("");
-        };
-        const handleFlip = () => {
-            handleReset();
-            setInverted((current) => !current);
-        }
-        return (
-            <div>
-                <div>
-                    <label htmlFor="minutes">Minutes</label>
-                    <input
-                        value={inverted ? amount*60 : amount}
-                        id="minutes"
-                        type="number"
-                        placeholder="minutes"
-                        onChange={onChange}
-                        disabled={inverted}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="hours">Hours</label>
-                    <input
-                        value={inverted ? amount : Math.round(amount/60)}
-                        id="hours"
-                        type="number"
-                        placeholder="hours"
-                        onChange={onChange}
-                        disabled={!inverted}
-                    />
-                </div>
-                <button onClick={handleReset}>Reset</button>
-                <button onClick={handleFlip}>{inverted ? "Turn back" : "Invert"}</button>
-            </div>
-        );
-    }
+    // Props는 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 해주는 방법이다.
+    // Props는 첫번째이자 유일한 인자이고, 오브젝트이다.
+    // 컴포넌트는 어떤 jsx를 반환하는 함수이다.
 
-    function KmToMiles() {
-        const [amount, setAmount] = React.useState();
-        const [inverted, setInverted] = React.useState();
-        const onChange = (event) => {
-            setAmount(event.target.value);
-        };
-        const handleReset = () => {
-            setAmount("");
-        };
-        const handleFlip = () => {
-            handleReset();
-            setInverted((current) => !current);
-        }
-        return (
-            <div>
-                <div>
-                    <label htmlFor="km">km</label>
-                    <input
-                        value={inverted ? amount*1.609344 : amount}
-                        id="km"
-                        type="number"
-                        placeholder="km"
-                        onChange={onChange}
-                        disabled={inverted}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="miles">miles</label>
-                    <input
-                        value={inverted ? amount : amount*0.621371}
-                        id="miles"
-                        type="number"
-                        placeholder="miles"
-                        onChange={onChange}
-                        disabled={!inverted}
-                    />
-                </div>
-                <button onClick={handleReset}>Reset</button>
-                <button onClick={handleFlip}>{inverted ? "Turn back" : "Invert"}</button>
-            </div>
-        );
+    function Btn(props){
+        // (props)는 오브젝트이기 때문에, 오브젝트로부터 속성을 꺼내 바로 사용할 수 있다.
+        // -> Btn(props) {props.text}      or      Btn({text}) {text}
+        return(
+            <button
+                style={{
+                    backgroundColor: "blue",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                    fontSize: props.big ? 18 :  14
+                }}>
+                {props.text}
+            </button>
+        )
     }
 
     function App(){
-        const [index, setIndex] = React.useState("-1");
-        const onSelect = (event) => {
-            setIndex(event.target.value); // = setIndex(event.target.options.selectedIndex);
-        }
-        // {} 이용하여 컴포넌트 안에 jsx를 사용할 수 있음. 삼항연산자로 if-else 사용
         return (
             <div>
-                <h1>Super Converter</h1>
-                <select value={index} onChange={onSelect}>
-                    <option value="-1">Select your units</option>
-                    <option value="0">Minutes 2 Hours</option>
-                    <option value="1">Km 2 Miles</option>
-                </select>
-                <hr/>
-                {index === "0" ? <MinutesToHours /> : null}
-                {index === "1" ? <KmToMiles /> : null}
+                <Btn text="Save Changes" big={true}/>
+                <Btn text="Continue" big={false}/>
             </div>
         )
     }

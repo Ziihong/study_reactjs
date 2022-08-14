@@ -1,44 +1,10 @@
 import {useState} from "react";
 import {useEffect} from "react";
+import Movie from './components/Movie';
 
-
-function App(){
-    const [loading, setLoading] = useState(true);
-    const [movies, setMovies] = useState([]);
-
-    const getMovies = async () => {
-        const json = await (
-            await fetch(
-                `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.9&sort_by=year`
-            )
-        ).json();
-        setMovies(json.data.movies);
-        console.log(json.data.movies)
-        setLoading(false);
-    }
-
-    useEffect( () => {
-        getMovies();
-    }, [])
-    return(
-        <div>
-            {loading ? (
-                <h1>Loading. . .</h1>
-            ) :
-                <div>
-                    {movies.map((movie) => (
-                        <div key={movie.id}>
-                            <img src={movie.medium_cover_image} alt="movie_img"/>
-                            <h2>{movie.title} ({movie.year})</h2>
-                            <p>{movie.summary}</p>
-                            <ul>
-                                {movie.genres.map((genre) => <li id={genre}>{genre}</li>)}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            }
-        </div>
-    )
+// 이전에는 App.js에서 영화 리스트를 보여주었지만, 이제는 App.js router를 준비한다.
+function App() {
+    return null;
 }
+
 export default App;

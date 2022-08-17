@@ -14,13 +14,13 @@ function Home() {
             )
         ).json();
         setMovies(json.data.movies);
-        console.log(json.data.movies)
         setLoading(false);
     }
 
     useEffect(() => {
         getMovies();
     }, [])
+
     return (
         <div>
             {loading ? (
@@ -29,7 +29,8 @@ function Home() {
                 <div>
                     {movies.map((movie) => (
                         <Movie
-                            key={movie.id} // key는 React.js에서만, map안에서 컴포넌트들을 render할 때 사용한다
+                            key={movie.id}
+                            id={movie.id}
                             coverImg={movie.medium_cover_image}
                             title={movie.title}
                             year={movie.year}

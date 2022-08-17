@@ -2,7 +2,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link // -> Link 컴포넌트는 브라우저 새로고침 없어도 유저를 다른 페이지로 이동시켜주는 컴포넌트이다.
 } from "react-router-dom";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
@@ -10,12 +9,13 @@ import Detail from "./routes/Detail";
 // <Switch></Switch> => <Routes></Routes> 로 변경
 // 렌더링할 컴포넌트 -> Route 컴포넌트 사이에 위치x, Route 컴포넌트의 element prop으로 설정하도록  ex) <Route path="/" element={<Home/>}></Route>
 
+// :/id -> react Router에 이 url이 변수를 받을 것이라고 설정
+// Detail.js 에서 useParams() 함수를 사용하여 react Router의 변수 값을 넘겨 받을 수 있다
 function App() {
-    // Switch -> Route(url)를 찾고, 해당 컴포넌트를 렌더링함
     return (
         <Router>
             <Switch>
-                <Route path="/movie">
+                <Route path="/movie/:id">
                     <Detail />
                 </Route>
                 <Route path="/">
